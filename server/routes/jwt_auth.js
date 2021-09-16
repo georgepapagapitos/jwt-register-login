@@ -9,11 +9,11 @@ const auth = require('../middleware/auth');
 router.post('/register', validInfo, async (req, res) => {
   try {
 
-    // Destrucutre req.body (username, email, password)
+    // Destructure req.body (username, email, password)
 
     const { username, email, password } = req.body;
 
-    // Check if user exists ( if user exists -> throw error)
+    // Check if user exists ( if user already exists -> throw error)
 
     const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 

@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
 
     const payload = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    req.user_id = payload.user_id;
+    req.user = payload.user;
 
   } catch (error) {
     console.error(error.message);

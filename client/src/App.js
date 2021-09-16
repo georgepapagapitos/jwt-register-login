@@ -13,9 +13,9 @@ function App() {
     <Router>
       <div className='container'>
         <Switch>
-          <Route exact path='/login' render={props => <Login {...props} />} />
-          <Route eact path='/register' render={props => <Register {...props} />} />
-          <Route exact path='/dashboard' render={props => <Dashboard {...props} />} />
+          <Route exact path='/login' render={ props => !isAuthenticated ? ( <Login {...props} /> ) : ( <Redirect to='/dashboard' /> ) } />
+          <Route exact path='/register' render={props => !isAuthenticated ? ( <Register {...props} /> ) : ( <Redirect to='/login' /> ) } />
+          <Route exact path='/dashboard' render={props => isAuthenticated ? ( <Dashboard {...props} /> ) : ( <Redirect to='/login' /> ) } />
         </Switch>
       </div>
     </Router>

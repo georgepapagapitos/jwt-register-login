@@ -7,3 +7,5 @@ const pool = new Pool({
   port: 5432,
   database: 'jwt_auth_db'
 });
+
+module.exports = pool;

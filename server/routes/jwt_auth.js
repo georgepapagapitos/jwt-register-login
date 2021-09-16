@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (user.rows.length !== 0) {
-      return res.status(401).send('User with that email already exists.');
+      return res.status(401).json('User with that email already exists.');
     }
 
     // Bcrypt the user password
@@ -33,6 +33,41 @@ router.post('/register', async (req, res) => {
     // Generate JWT token
 
     const token = jwtGenerator(newUser.rows[0].user_id);
+    res.json({ token });
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Login
+router.post('/login', async (req, res) => {
+  try {
+
+    // Destructure the req.body
+
+    const { email, password } = req.body;
+
+    // Check if user exists (if not -> throw error)
+
+    const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+    if (user.rows.length === 0) {
+      return res.status(401).json('Incorrect email or password');
+    }
+
+    // Check if password matches db password
+
+    const validPassword = await brcypt.compare(password, user.rows[0].password);
+
+    if (!validPassword) {
+      return res.status(401).json('Incorrect email or password');
+    }
+
+    // Give user JWT token
+
+    const token = jwtGenerator(user.rows[0].user_id);
     res.json({ token });
 
   } catch (error) {

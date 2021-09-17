@@ -17,7 +17,9 @@ const Register = ({setAuth}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+
       const body = {username, email, password};
+
       const response = await fetch('http://localhost:5000/auth/register', {
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
@@ -31,7 +33,9 @@ const Register = ({setAuth}) => {
       setAuth(true);
 
     } catch (error) {
+
       console.error(error.message);
+      
     }
   }
 
@@ -42,7 +46,7 @@ const Register = ({setAuth}) => {
         <input value={username} onChange={e => onChange(e)} className='form-control my-2' type="text" name="username" placeholder="Username" />
         <input value={email} onChange={e => onChange(e)} className='form-control my-2' type="email" name="email" placeholder="Email" />
         <input value={password} onChange={e => onChange(e)} className='form-control my-2' type="password" name="password" placeholder="Password" />
-        <button className='btn btn-primary my-2'>Submit</button>
+        <button className='btn btn-primary my-2'>Register</button>
       </form>
     </>
   );

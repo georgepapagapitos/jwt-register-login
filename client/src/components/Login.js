@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = ({ setAuth }) => {
 
@@ -29,7 +30,11 @@ const Login = ({ setAuth }) => {
 
       localStorage.setItem('token', parseResponse.token);
 
-      setAuth(true);
+      if(parseResponse.token !== undefined) {
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
 
     } catch (error) {
 
@@ -45,6 +50,7 @@ const Login = ({ setAuth }) => {
         <input value={email} onChange={e => onChange(e)} className='form-control my-2' type="email" name="email" placeholder="Email" />
         <input value={password} onChange={e => onChange(e)} className='form-control my-2' type="password" name="password" placeholder="Password" />
         <button className='btn btn-primary my-2'>Login</button>
+        <Link className='text-center my-2' to='/register'>Register</Link>
       </form>
     </>
   );

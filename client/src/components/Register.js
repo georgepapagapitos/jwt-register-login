@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = ({setAuth}) => {
 
@@ -30,12 +31,16 @@ const Register = ({setAuth}) => {
 
       localStorage.setItem('token', parseResponse.token);
 
-      setAuth(true);
+      if(parseResponse.token !== undefined) {
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
 
     } catch (error) {
 
       console.error(error.message);
-      
+
     }
   }
 
@@ -46,7 +51,8 @@ const Register = ({setAuth}) => {
         <input value={username} onChange={e => onChange(e)} className='form-control my-2' type="text" name="username" placeholder="Username" />
         <input value={email} onChange={e => onChange(e)} className='form-control my-2' type="email" name="email" placeholder="Email" />
         <input value={password} onChange={e => onChange(e)} className='form-control my-2' type="password" name="password" placeholder="Password" />
-        <button className='btn btn-primary my-2'>Register</button>
+        <button className='btn btn-success my-2'>Register</button>
+        <Link className='text-center my-2' to='/login'>Login</Link>
       </form>
     </>
   );

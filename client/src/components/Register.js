@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-const Register = () => {
+const Register = ({setAuth}) => {
 
   const [inputs, setInputs] = useState({
     username: '',
@@ -23,8 +23,13 @@ const Register = () => {
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(body)
       });
+
       const parseResponse = await response.json();
-      
+
+      localStorage.setItem('token', parseResponse.token);
+
+      setAuth(true);
+
     } catch (error) {
       console.error(error.message);
     }

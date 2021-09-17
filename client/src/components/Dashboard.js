@@ -7,25 +7,25 @@ const Dashboard = ({ setAuth }) => {
     email: ''
   });
 
-  useEffect(() => {
-    const getUsername = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/dashboard/', {
-          method: 'GET',
-          headers: { token: localStorage.token }
-        });
+  const getUser = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/dashboard/', {
+        method: 'GET',
+        headers: { token: localStorage.token }
+      });
 
-        const parseResponse = await response.json();
+      const parseResponse = await response.json();
 
-        setUser({...user, username: parseResponse.username, email: parseResponse.email});
+      setUser({...user, username: parseResponse.username, email: parseResponse.email});
 
-      } catch (error) {
-        console.error(error.message);
-      }
+    } catch (error) {
+      console.error(error.message);
     }
+  }
 
-    getUsername();
-  });
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const logout = (e) => {
     e.preventDefault();
